@@ -5,6 +5,7 @@ import {
   UserSession,
   AppConfig
 } from 'blockstack';
+import Scrolly from './scrolly'
 
 const appConfig = new AppConfig(['store_write', 'publish_data'])
 const userSession = new UserSession({ appConfig: appConfig })
@@ -24,13 +25,14 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="site-wrapper">
-        <div className="site-wrapper-inner">
-          { !userSession.isUserSignedIn() ?
+      <div >
+        
+          {/* { !userSession.isUserSignedIn() ?
             <Signin userSession={userSession} handleSignIn={ this.handleSignIn } />
             : <Profile userSession={userSession} handleSignOut={ this.handleSignOut } />
-          }
-        </div>
+          } */}
+          <Scrolly/>
+       
       </div>
     );
   }
