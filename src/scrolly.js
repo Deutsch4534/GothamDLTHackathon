@@ -15,12 +15,14 @@ export default class Scrolly extends Component {
         console.log(this.props.feed)
         return (
             <div style = {{backgroundColor:'grey'}}>
-                <NavBar/>
-                <div className="container">
+                {/* <NavBar/> */}
+                <div>
                     {this.props.feed.map((i, index) => (
-                        <Paper style = {{margin:20,}}>
+                        // <Paper style = {{margin:20,}}>
+                        <div style={{borderBottom: "5px solid black"}}> 
                             <img src= {i.url} className = "item" key={index}/>
-                        </Paper>
+                        </div>
+                        // </Paper>
                     ))}
                 </div>
             </div>
