@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './styles.css'
 import BackButton from './BackButton.js';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 const PhotoStorage = require('./lib/photoStorage')
 
 export default class Camey extends Component {
@@ -25,6 +26,7 @@ export default class Camey extends Component {
     }
 
     takeASnap(){
+        console.log('hereeeee');
         const vid = document.querySelector('video');
         const canvas = document.createElement('canvas'); // create a canvas
         const ctx = canvas.getContext('2d'); // get its context
@@ -43,12 +45,10 @@ export default class Camey extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{width:"100vw", height:"100vh", position:"fixed", overflow:"hidden"}}>
                 <BackButton {...this.props}></BackButton>
-                <video id="video" width="100%" height="100%" autoPlay></video>
-                <div style={{position: "fixed", bottom: "0", backgroundColor: "#1976d2", right: "40%"}}>
-                    <button id="snap" onClick={()=>{this.takeASnap()}}>Snap Photo</button>
-                </div>
+                <PhotoCameraIcon id="snap" fontSize="large" style={{position: "fixed", textAlign:"center", float:"center", bottom: "0", backgroundColor: "none", right:"50%"}} onClick={()=>{this.takeASnap()}}>snpa</PhotoCameraIcon>
+                <video position="absolute" id="video" width="100%" height="100%" autoPlay></video>
                 <canvas id="canvas" width="100%" height="100%"></canvas>
             </div>
         );

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './styles.css'
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 export default class BackButton extends Component {
     constructor(props) {
@@ -8,10 +9,11 @@ export default class BackButton extends Component {
     }
 
     goBack() {
-        this.props.history.goBack();
+        // this.props.history.goBack();
+        this.props.history.push("/");
     }
 
     render() {
-        return <button onClick={this.goBack}>Back</button>;
+        return <KeyboardBackspaceIcon fontSize="large" onClick={this.goBack}></KeyboardBackspaceIcon>;
     }
 }
