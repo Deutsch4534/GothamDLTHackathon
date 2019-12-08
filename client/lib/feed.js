@@ -31,7 +31,7 @@ const writeUrlToFeed = (url, callback) => {
             }
         })
         .catch((error) => {
-            console.log(JSON.stringify(response));
+            console.log(error);
             callback(false);
         })
     } else {

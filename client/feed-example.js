@@ -1,9 +1,10 @@
 const feed = require('./lib/feed');
 
-feed.getFeed((data) => {
-    console.log(data);
+//change this url to play with it will probably already be in dynamo
+feed.writeUrlToFeed('https://test55.com',(successQuestionMark) => {
+    console.log(successQuestionMark);
 });
 
-feed.writeUrlToFeed('https://test24.com',(successQuestionMark) => {
-    console.log(successQuestionMark);
+feed.getFeed((data) => {
+    console.log(data);
 });
