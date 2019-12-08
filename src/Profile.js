@@ -41,15 +41,11 @@ export default class Profile extends Component {
   }
   //look into failing jpeg upload
   onChange(e) {
-    this.setState({ file: e.target.files[0]}, ()=>{
-      let pic = this.state.file.__proto__.__proto__;
-      new Response(pic).arrayBuffer().then(buf=>{
-        var arr = new Int8Array(buf)
-        console.log(buf)
-        this.saveNewImage(buf)
-      })
-        // new Response(pic).arrayBuffer().then(buf=>this.saveNewImage(buf))
-    });
+    const { userSession } = this.props
+    const options = {encrypt:false}
+    userSession.putFile('images.jpeg', e.target.files[0], options).then(()=>{
+      console.log('yay?');
+    })
   }
   render() {
     const { handleSignOut, userSession } = this.props;
@@ -125,25 +121,6 @@ export default class Profile extends Component {
     );
   }
 
-  saveNewImage(imageData){
-    const { userSession } = this.props
-    let images = this.state.images
-    console.log(imageData)
-    
-
-    images.unshift(image)
-
-    const options = {encrypt:false}
-    userSession.putFile('images.jpeg', imageData, options).then(()=>{
-      this.setState({
-        images:images
-      })
-    })
-    userSession.getFileUrl('images.jpeg').then((val) => {
-      console.log(val)
-    })
-  }
-  
   fetchImageData(){
     const { userSession } = this.props
     console.log(userSession)
@@ -176,6 +153,13 @@ export default class Profile extends Component {
   }
 
   componentDidMount() {
+    console.log('2222222222222222222222222222222222222');
+    const { userSession } = this.props
+    userSession.getFileUrl('images.jpeg').then((file) => {
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+      console.log(file);
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    });
     this.fetchImageData()
   }
 }
