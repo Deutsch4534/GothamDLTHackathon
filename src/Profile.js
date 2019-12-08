@@ -6,6 +6,8 @@ import { read } from 'fs';
 import image from './image.jpg'
 import { encode } from 'punycode';
 
+const PhotoStorage = require('./lib/photoStorage');
+
 const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png';
 
 export default class Profile extends Component {
@@ -41,15 +43,25 @@ export default class Profile extends Component {
   }
   //look into failing jpeg upload
   onChange(e) {
-    this.setState({ file: e.target.files[0]}, ()=>{
-      let pic = this.state.file.__proto__.__proto__;
-      new Response(pic).arrayBuffer().then(buf=>{
-        var arr = new Int8Array(buf)
-        console.log(buf)
-        this.saveNewImage(buf)
-      })
-        // new Response(pic).arrayBuffer().then(buf=>this.saveNewImage(buf))
-    });
+    const { userSession } = this.props
+    PhotoStorage.writePhotoToStorage(userSession, e.target.files[0], (successOrNot) => {
+      console.log(successOrNot);
+    })
+    // console.log(e.target.files[0]);
+    // var reader = new FileReader();
+
+    // reader.onload = function(event) {
+    //   var binary = event.target.result;
+    //   var md5 = CryptoJS.MD5(binary).toString();
+    //   console.log(md5);
+    // };
+
+    // reader.readAsBinaryString(e.target.files[0]);
+    // const { userSession } = this.props
+    // const options = {encrypt:false}
+    // userSession.putFile('images.jpeg', e.target.files[0], options).then(()=>{
+    //   console.log('yay?');
+    // })
   }
   render() {
     const { handleSignOut, userSession } = this.props;
@@ -125,25 +137,6 @@ export default class Profile extends Component {
     );
   }
 
-  saveNewImage(imageData){
-    const { userSession } = this.props
-    let images = this.state.images
-    console.log(imageData)
-    
-
-    images.unshift(image)
-
-    const options = {encrypt:false}
-    userSession.putFile('images.jpeg', imageData, options).then(()=>{
-      this.setState({
-        images:images
-      })
-    })
-    userSession.getFileUrl('images.jpeg').then((val) => {
-      console.log(val)
-    })
-  }
-  
   fetchImageData(){
     const { userSession } = this.props
     console.log(userSession)
@@ -176,6 +169,13 @@ export default class Profile extends Component {
   }
 
   componentDidMount() {
+    console.log('2222222222222222222222222222222222222');
+    const { userSession } = this.props
+    userSession.getFileUrl('images.jpeg').then((file) => {
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+      console.log(file);
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    });
     this.fetchImageData()
   }
 }

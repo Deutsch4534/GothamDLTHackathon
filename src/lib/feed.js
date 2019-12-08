@@ -14,7 +14,7 @@ const getFeed = (callback) => {
         }
     })
     .catch((error) => {
-        console.log(JSON.stringify(response));
+        console.log(error);
         callback(false);
     })
 }
@@ -35,7 +35,7 @@ const writeUrlToFeed = (url, callback) => {
             callback(false);
         })
     } else {
-        console.log(JSON.stringify(response));
+        console.log('not a valid url');
         callback(false);
     }
 }
