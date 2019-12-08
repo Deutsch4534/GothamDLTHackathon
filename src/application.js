@@ -13,7 +13,7 @@ export default class Application extends Component {
         return (
             <Switch>
                 <Route exact path="/scrolly" component={(props) => <Scrolly {...props} feed={this.props.feed}/>} path="/"/>
-                <Route exact path="/camey" component={() => <Camey userSession={this.props.userSession} path="/camey"/> }/>
+                <Route exact path="/camey" component={(props) => <Camey {...props} userSession={this.props.userSession} path="/camey"/> }/>
             </Switch>
         );
     }
