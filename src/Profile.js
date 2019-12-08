@@ -39,6 +39,7 @@ export default class Profile extends Component {
   onFormSubmit(e) {
     console.log("here")
   }
+  //look into failing jpeg upload
   onChange(e) {
     this.setState({ file: e.target.files[0]}, ()=>{
       let pic = this.state.file.__proto__.__proto__;
