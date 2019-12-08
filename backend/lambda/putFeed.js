@@ -4,12 +4,13 @@ var AWS = require('aws-sdk');
 var dynamodb = new AWS.DynamoDB();
 
 exports.handler = async (event) => {
-    if (event.url) {
+    const body = JSON.parse(event.body);
+    if (body.url) {
         const data = await dynamodb.putItem(
         {
             TableName: "feed",
             Item: {
-                "url": {"S": event.url}
+                "url": {"S": body.url}
             }
         }).promise();
         const response = {
