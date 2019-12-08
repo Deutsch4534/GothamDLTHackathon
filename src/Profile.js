@@ -6,6 +6,8 @@ import { read } from 'fs';
 import image from './image.jpg'
 import { encode } from 'punycode';
 
+const PhotoStorage = require('./lib/photoStorage');
+
 const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png';
 
 export default class Profile extends Component {
@@ -42,10 +44,24 @@ export default class Profile extends Component {
   //look into failing jpeg upload
   onChange(e) {
     const { userSession } = this.props
-    const options = {encrypt:false}
-    userSession.putFile('images.jpeg', e.target.files[0], options).then(()=>{
-      console.log('yay?');
+    PhotoStorage.writePhotoToStorage(userSession, e.target.files[0], (successOrNot) => {
+      console.log(successOrNot);
     })
+    // console.log(e.target.files[0]);
+    // var reader = new FileReader();
+
+    // reader.onload = function(event) {
+    //   var binary = event.target.result;
+    //   var md5 = CryptoJS.MD5(binary).toString();
+    //   console.log(md5);
+    // };
+
+    // reader.readAsBinaryString(e.target.files[0]);
+    // const { userSession } = this.props
+    // const options = {encrypt:false}
+    // userSession.putFile('images.jpeg', e.target.files[0], options).then(()=>{
+    //   console.log('yay?');
+    // })
   }
   render() {
     const { handleSignOut, userSession } = this.props;
