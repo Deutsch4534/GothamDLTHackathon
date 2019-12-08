@@ -7,11 +7,18 @@ import {
 } from 'blockstack';
 import Scrolly from './scrolly'
 
+const Feed = require('./lib/feed');
+
 const appConfig = new AppConfig(['store_write', 'publish_data'])
 const userSession = new UserSession({ appConfig: appConfig })
 
 export default class App extends Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      feed: [],
+    }
+  }
 
   handleSignIn(e) {
     e.preventDefault();
@@ -31,13 +38,21 @@ export default class App extends Component {
             <Signin userSession={userSession} handleSignIn={ this.handleSignIn } />
             : <Profile userSession={userSession} handleSignOut={ this.handleSignOut } />
           } */}
-          <Scrolly/>
+          { !userSession.isUserSignedIn() ?
+            <Signin userSession={userSession} handleSignIn={ this.handleSignIn } />
+            : <Scrolly feed={this.state.feed}/>
+          }
+          
        
       </div>
     );
   }
 
   componentDidMount() {
+    Feed.getFeed((data) => {
+      this.setState({feed: data});
+    });
+    
     if (userSession.isSignInPending()) {
       userSession.handlePendingSignIn().then((userData) => {
         window.history.replaceState({}, document.title, "/")

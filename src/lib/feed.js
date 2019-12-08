@@ -7,7 +7,7 @@ const feedApiUrl = 'https://itk6d69p5b.execute-api.us-east-2.amazonaws.com/prod/
 const getFeed = (callback) => {
     axios.get(feedApiUrl).then((response) => {
         if (response.status == '200') {
-            callback(response.data.body);
+            callback(JSON.parse(response.data.body));
         } else {
             console.log(JSON.stringify(response));
             callback(false);
