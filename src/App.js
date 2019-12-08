@@ -5,7 +5,8 @@ import {
   UserSession,
   AppConfig
 } from 'blockstack';
-import Scrolly from './scrolly'
+import Application from './application';
+import {BrowserRouter} from 'react-router-dom';
 
 const Feed = require('./lib/feed');
 
@@ -38,9 +39,17 @@ export default class App extends Component {
             <Signin userSession={userSession} handleSignIn={ this.handleSignIn } />
             : <Profile userSession={userSession} handleSignOut={ this.handleSignOut } />
           } */}
-          { !userSession.isUserSignedIn() ?
+          {/* { !userSession.isUserSignedIn() ?
             <Signin userSession={userSession} handleSignIn={ this.handleSignIn } />
             : <Scrolly feed={this.state.feed}/>
+          }
+          { !userSession.isUserSignedIn() ?
+            <Signin userSession={userSession} handleSignIn={ this.handleSignIn } />
+            : <Camey userSession={userSession}/>
+          } */}
+          { !userSession.isUserSignedIn() ?
+            <Signin userSession={userSession} handleSignIn={ this.handleSignIn } />
+            : <BrowserRouter><Application userSession={userSession} feed={this.state.feed}/></BrowserRouter>
           }
           
        
