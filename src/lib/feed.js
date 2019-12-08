@@ -6,7 +6,7 @@ const feedApiUrl = 'https://itk6d69p5b.execute-api.us-east-2.amazonaws.com/prod/
 //returns data or false
 const getFeed = (callback) => {
     axios.get(feedApiUrl).then((response) => {
-        if (response.status === '200') {
+        if (response.status == '200') {
             callback(response.data.body);
         } else {
             console.log(JSON.stringify(response));
@@ -23,7 +23,7 @@ const getFeed = (callback) => {
 const writeUrlToFeed = (url, callback) => {
     if(validURL(url)) {
         axios.put(feedApiUrl,{url: url}).then((response) => {
-            if (response.status === '200') {
+            if (response.status == '200') {
                 callback(true);
             } else {
                 console.log(JSON.stringify(response));
