@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import './styles.css'
-import AppBar from '@material-ui/core/AppBar'
-import NavBar from './NavBar'
-import { Paper } from '@material-ui/core';
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
+
 
 export default class Scrolly extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            currentImage: 0,
+        }
     }
     
-
 
     render() {
         console.log(this.props.feed)
@@ -17,13 +19,23 @@ export default class Scrolly extends Component {
             <div style = {{backgroundColor:'grey'}}>
                 {/* <NavBar/> */}
                 <div>
-                    {this.props.feed.map((i, index) => (
-                        // <Paper style = {{margin:20,}}>
-                        <div style={{borderBottom: "5px solid black"}}> 
-                            <img src= {i.url} className = "item" key={index}/>
+                <CarouselProvider
+                    naturalSlideWidth={125}
+                    naturalSlideHeight={100}
+                    totalSlides={this.props.feed.length}
+                    orientation={'vertical'}
+                    width={'100%'}
+                    centerSlidePercentage={100}
+                    dynamicHeight={true}
+                >
+                    <Slider>
+                        {this.props.feed.map((i, index) => (
+                        <div>
+                            <Slide index={index}><img src= {i.url} className = "item" key={index}/></Slide>
                         </div>
-                        // </Paper>
-                    ))}
+                        ))}
+                    </Slider>
+                </CarouselProvider>
                 </div>
             </div>
         );
